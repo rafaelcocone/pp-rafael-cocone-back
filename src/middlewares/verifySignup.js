@@ -33,7 +33,6 @@ export const validateData = async  (req,res,next) =>{
         if(emailFound) throw "the email already exist"
         
     }catch(error){
-        console.log(error)
         return res.status(400).json({message: error})
     }
     

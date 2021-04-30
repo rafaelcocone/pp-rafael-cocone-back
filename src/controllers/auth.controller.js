@@ -6,7 +6,6 @@ import config from '../config'
 
 //creacion de nuevo usario y retorna un token
 export const signup = async (req,res) => {
-    console.log(req.body)
       
     const { name, email, telephone, password, age, gender, hobby} = req.body
 
@@ -38,7 +37,6 @@ export const signin = async (req,res) => {
 
     const matchPassword = await User.comparePasword(req.body.password, userFound.password)
     if(!matchPassword) return res.status(401).json({token:null, message:"Invalid password"})
-    console.log(userFound)
 
     const token = jwt.sign({id: userFound._id}, config.SECRET, {
         expiresIn:864000//24 horas

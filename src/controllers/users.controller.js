@@ -1,11 +1,21 @@
 import User from '../models/User'
 
+var today = new Date();
+var treeDaysBefore = new Date();
+
+treeDaysBefore.setDate(today.getDate() - 3);/*
+var dd = String(treeDaysBefore.getDate()).padStart(2, '0');
+var mm = String(treeDaysBefore.getMonth() + 1).padStart(2, '0'); //January is 0!
+var yyyy = treeDaysBefore.getFullYear();
+
+treeDaysBefore = yyyy+'-'+mm+'-'+dd*/
+
+
 //crear nuevo usuario
 export const createUser = async(req,res) => {
-    console.log(req.body)
-    const { name, email, telephone, password, age, gender, hobby} = req.body
+    const { name, email, telephone, password, age, gender, hobby,signupDate} = req.body
 
-    const newUser = new User({ name, email, telephone, password, age, gender, hobby})
+    const newUser = new User({ name, email, telephone, password, age, gender, hobby, signupDate})
 
     const userSaved = await newUser.save()
 
@@ -16,7 +26,6 @@ export const createUser = async(req,res) => {
 // busqueda por nombre y/o poasatiempo
 export const getUsers = async(req,res) => {
 
-    console.log(req.body)
     let users = [],
         search = {},
         status = 200
@@ -25,7 +34,6 @@ export const getUsers = async(req,res) => {
     if(name && name !== '') search.name = name
     if(hobby && hobby !== '')   search.hobby = hobby
 
-    console.log(search)
 
     users = await User.find(search)
 
@@ -41,5 +49,32 @@ export const deleteUserById = async(req,res) => {
 }
 
 export const groupByUser = async(req,res) => {
-    res.json('search user')
+    let users = [],
+    search = {},
+    status = 200
+
+    users = await User.aggregate([
+        {
+            $match:{
+                age:{$gt:18}, 
+                gender:"F",
+                signupDate:{ $gte:treeDaysBefore}
+            }
+                
+        },{
+            $group:{
+                _id: { Hobby:"$hobby"  },
+                users: { 
+                    $push:{
+                        name:"$name",
+                        telephone:"$telephone",
+                        hobby:"$hobby"
+
+                    }
+                 }
+            }
+        }
+    ])
+
+    res.status(status).json(users)   
 }
