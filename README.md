@@ -45,6 +45,8 @@ DELETE http://localhost:4000/api/users/:userID
 usuarios que sean mayores a 18 años, con un género ‘Femenino’, creados
 en los últimos 3 días, agrupando a los usuarios resultantes por pasatiempo
 
+http://localhost:4000/api/users/group/
+(requiere que se envie un token x-access-token en el headers)
 
 =================================================
 NOTA: para  obtener x-access-token ingresar a la ruta
