@@ -1,7 +1,5 @@
 import User from '../models/User'
 
-var checkForHexRegExp = new RegExp("^[0-9a-fA-F]{24}$")
-
 //crear nuevo usuario
 export const createUser = async(req,res) => {
     console.log(req.body)
@@ -38,11 +36,6 @@ export const getUsers = async(req,res) => {
 export const deleteUserById = async(req,res) => {
     const {userId} = req.params
     
-    if(!checkForHexRegExp.test(userId) )  return res.status(403).json({message: "Require ID user valid"})
-
-    const userFound = await User.findById(userId)
-    if(!userFound) return res.status(400).json({message:"User no found"})
-
     await User.findByIdAndDelete( userId )
     return res.status(200).json({message:"User was delete."})
 }
