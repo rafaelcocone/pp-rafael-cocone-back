@@ -1,0 +1,33 @@
+{
+  "name": "pp-rafael-cocone-back",
+  "version": "1.0.0",
+  "email": "rafaelcocone@gmail.com",
+  "telephone": "247-118-78-98",
+  "description": "Proyecto de prueba de uns Api REST",
+  "main": "index.js",
+  "scripts": {
+    "start": "babel-node src/index.js",
+    "dev": "nodemon src/index.js --exec babel-node",
+    "build": "babel src --out-dir build"
+  },
+  "keywords": [],
+  "author": "Osiris Rafael Cocone Lopez",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "helmet": "^4.5.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.12.6",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.13.16",
+    "@babel/core": "^7.13.16",
+    "@babel/node": "^7.13.13",
+    "@babel/preset-env": "^7.13.15",
+    "nodemon": "^2.0.7"
+  }
+}
